@@ -27,6 +27,8 @@ const getProfile = (profile) => {
     }
     return null
 }
+console.log(process.env.Client_Id)
+console.log(process.env.Client_Secret)
 
 passport.use(
     new GoogleStrategy(
