@@ -52,6 +52,125 @@ exports.users_signup = async (req, res, next) => {
     }
 }
 
+exports.users_get_pending = async (req, res, next) => {
+    try {
+        const userAll = await sequelizeUser.findAll({
+            attributes: ['email', 'status'],
+
+            where: {
+                status: "pending"
+            }
+        })
+        console.log("Pending Users", userAll);
+
+        res.json({
+            message: userAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+exports.users_update_approve = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const userAll = await sequelizeUser.update({
+            status: "approve"
+        }, {
+            where: {
+                id
+            }
+        })
+        console.log("Updated status", userAll);
+
+        res.json({
+            message: "Approved successfully", userAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+exports.users_update_reject = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const userAll = await sequelizeUser.update({
+            status: "reject"
+        }, {
+            where: {
+                id
+            }
+        })
+        console.log("Updated status", userAll);
+
+        res.json({
+            message: "Rejected successfully", userAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+exports.users_get_approve = async (req, res, next) => {
+    try {
+        const userAll = await sequelizeUser.findAll({
+            attributes: ['email', 'status'],
+
+            where: {
+                status: "approve"
+            }
+        })
+        console.log("Approved Users", userAll);
+
+        res.json({
+            message: userAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+exports.users_get_reject = async (req, res, next) => {
+    try {
+        const userAll = await sequelizeUser.findAll({
+            attributes: ['email', 'status'],
+
+            where: {
+                status: "reject"
+            }
+        })
+        console.log("Rejected Users", userAll);
+
+        res.json({
+            message: userAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+
+
 exports.users_login = async (req, res, next) => {
 
     console.log("users_login", req.body);
