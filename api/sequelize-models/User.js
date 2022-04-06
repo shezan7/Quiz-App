@@ -7,7 +7,8 @@ const { STRING } = DataTypes
 const user = sequelize.define('user', {
     email: {
         type: STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: STRING,
@@ -24,14 +25,14 @@ const user = sequelize.define('user', {
 }, {
     schema: "quiz_app",
     timestamps: true,
-    freezeTableName: true,
+    // freezeTableName: true,
 
-    indexes: [
-        // Create a unique index on email
-        {
-            unique: true,
-            fields: ['email']
-        }]
+    // indexes: [
+    //     // Create a unique index on email
+    //     {
+    //         unique: true,
+    //         fields: ['email']
+    //     }]
 })
 
 module.exports = user 
