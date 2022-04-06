@@ -20,6 +20,7 @@ const user = sequelize.define('user', {
     },
     status: {
         type: STRING,
+        allowNull: true,
         defaultValue: "pending"
     }
 }, {
