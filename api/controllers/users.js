@@ -178,30 +178,31 @@ exports.users_login = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
-
         const user = await db.query(
             `SELECT 
                 u.*,
                 (SELECT 
                     r.accesslist 
                 FROM 
-                    shezan.user_role_mapping urm, 
-                    shezan.roles r 
+                    quiz_app.user_role_mapping urm, 
+                    quiz_app.role r 
                 WHERE 
                     u.id = urm.user_id  
                     AND urm.role_id = r.id)
             FROM 
-                shezan.users u
+                quiz_app.users u
             WHERE 
                 u.email= '${email}';`
             , {
                 type: QueryTypes.SELECT
             })
 
+        console.log(user[0].status)
+
         if (!user[0]) {
-            return res.status(404).send({ message: "User Not found." });
+            return res.status(404).send({ message: "User Not found!!!" });
         }
-        if (user[0]) {
+        if ((user[0]) && ((user[0].status === null) || (user[0].status === "approve"))) {
             const validPassword = await bcrypt.compare(password, user[0].password)
 
             if (validPassword) {
@@ -225,6 +226,11 @@ exports.users_login = async (req, res, next) => {
                     message: "Invalid Password!"
                 });
             }
+        }
+        else {
+            return res.status(405).send({
+                message: "User Not found!"
+            });
         }
 
     }
