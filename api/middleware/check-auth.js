@@ -28,6 +28,7 @@ const AuthorizedUser = async (req, res, next) => {
     }
 
     req.user = decodedToken;
+    // console.log("decoded!", decodedToken)
     return next();
 };
 

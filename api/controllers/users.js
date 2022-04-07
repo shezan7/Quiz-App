@@ -169,8 +169,6 @@ exports.users_get_reject = async (req, res, next) => {
     }
 }
 
-
-
 exports.users_login = async (req, res, next) => {
 
     console.log("users_login", req.body);
@@ -202,7 +200,7 @@ exports.users_login = async (req, res, next) => {
         if (!user[0]) {
             return res.status(404).send({ message: "User Not found!!!" });
         }
-        if ((user[0]) && ((user[0].status === null) || (user[0].status === "approve"))) {
+        if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve"))) {
             const validPassword = await bcrypt.compare(password, user[0].password)
 
             if (validPassword) {
@@ -226,6 +224,7 @@ exports.users_login = async (req, res, next) => {
                     message: "Invalid Password!"
                 });
             }
+            console.log("check-access", user[0].accesslist)
         }
         else {
             return res.status(405).send({
