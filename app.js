@@ -4,6 +4,7 @@ const app = express()
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 require('./api/middleware/passport-setup')
+const cors = require('cors')
 
 
 const userRoutes = require('./api/routes/users')
@@ -11,7 +12,7 @@ const quizRoutes = require('./api/routes/quiz')
 const googleAuthRoutes = require('./api/routes/googleAuth')
 
 app.use(express.json())
-
+app.use(cors())
 
 app.use(userRoutes)
 app.use(quizRoutes)
