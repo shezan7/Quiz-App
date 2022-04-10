@@ -17,9 +17,6 @@ app.use(cors())
 app.use(userRoutes)
 app.use(quizRoutes)
 app.use(googleAuthRoutes)
-app.all("/", function (req, res) {
-    res.end("welcome")
-})
 
 
 app.use(cookieSession({

@@ -55,7 +55,7 @@ exports.users_signup = async (req, res, next) => {
 exports.users_get_pending = async (req, res, next) => {
     try {
         const userAll = await sequelizeUser.findAll({
-            attributes: ['email', 'status'],
+            attributes: ['id', 'email', 'status'],
 
             where: {
                 status: "pending"
@@ -79,6 +79,7 @@ exports.users_update_approve = async (req, res, next) => {
     try {
         const { id } = req.params;
         const userAll = await sequelizeUser.update({
+            attributes: ['id'],
             status: "approve"
         }, {
             where: {
@@ -103,6 +104,7 @@ exports.users_update_reject = async (req, res, next) => {
     try {
         const { id } = req.params;
         const userAll = await sequelizeUser.update({
+            attributes: ['id'],
             status: "reject"
         }, {
             where: {
@@ -126,7 +128,7 @@ exports.users_update_reject = async (req, res, next) => {
 exports.users_get_approve = async (req, res, next) => {
     try {
         const userAll = await sequelizeUser.findAll({
-            attributes: ['email', 'status'],
+            attributes: ['id', 'email', 'status'],
 
             where: {
                 status: "approve"
@@ -149,7 +151,7 @@ exports.users_get_approve = async (req, res, next) => {
 exports.users_get_reject = async (req, res, next) => {
     try {
         const userAll = await sequelizeUser.findAll({
-            attributes: ['email', 'status'],
+            attributes: ['id', 'email', 'status'],
 
             where: {
                 status: "reject"
