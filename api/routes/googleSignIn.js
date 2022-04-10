@@ -14,17 +14,17 @@ router.get('/good', (req, res) => res.send('Welcome Page'))
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/googleAuth/failed' }),
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
     function (req, res) {
         console.log(req.user.id)
         // Successful authentication, redirect home.
-        res.redirect('/googleAuth/good');
+        res.redirect('/good');
     });
 
 router.get('/logout', (req, res) => {
     req.session = null
     //req.logOut()
-    res.redirect('/googleAuth')
+    res.redirect('/')
 })
 
 

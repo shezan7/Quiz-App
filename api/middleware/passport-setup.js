@@ -35,9 +35,8 @@ passport.use(
         {
             clientID: process.env.Client_Id,
             clientSecret: process.env.Client_Secret,
-            callbackURL: "http://localhost:3000/googleAuth/google/callback"
+            callbackURL: "http://localhost:3000/google/callback"
         },
-
 
         //  Passport verify callback
         async (accessToken, refreshToken, profile, done) => {
@@ -66,4 +65,5 @@ passport.use(
             }
         }
     )
+
 );

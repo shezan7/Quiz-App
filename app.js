@@ -9,14 +9,17 @@ const cors = require('cors')
 
 const userRoutes = require('./api/routes/users')
 const quizRoutes = require('./api/routes/quiz')
-const googleAuthRoutes = require('./api/routes/googleAuth')
+const googleAuthRoutes = require('./api/routes/googleSignIn')
 
 app.use(express.json())
 app.use(cors())
 
 app.use(userRoutes)
 app.use(quizRoutes)
-app.use('/googleAuth', googleAuthRoutes)
+app.use(googleAuthRoutes)
+app.all("/", function (req, res) {
+    res.end("welcome")
+})
 
 
 app.use(cookieSession({
