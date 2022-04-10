@@ -18,6 +18,10 @@ app.use(userRoutes)
 app.use(quizRoutes)
 app.use(googleAuthRoutes)
 
+app.get("/", (req, res) => {
+    res.status(200).end("welcome")
+})
+
 
 app.use(cookieSession({
     name: 'session',
