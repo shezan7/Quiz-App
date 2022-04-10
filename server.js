@@ -1,9 +1,6 @@
 const app = require('./app')
 
 const sequelize = require('./api/config/db');
-const user = require('./api/sequelize-models/User');
-
-
 
 sequelize
     .authenticate()
