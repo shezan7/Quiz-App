@@ -2,7 +2,8 @@ const db = require('../config/db')
 const { QueryTypes } = require('sequelize')
 
 const sequelizeQuiz = require('../sequelize-models/Quiz')
-const sequelizeUserOrderMapping = require('../sequelize-models/UserQuizMapping')
+const sequelizeUserOrderMapping = require('../sequelize-models/UserQuizMapping');
+const sequelize = require('../config/db');
 
 exports.quiz_get_all = async (req, res, next) => {
     console.log("orders_get", req.body);
@@ -199,13 +200,66 @@ exports.quiz_create = async (req, res, next) => {
 exports.view_quizlist = async (req, res, next) => {
     try {
         const quizAll = await sequelizeQuiz.findAll({
-            attributes: ['id', 'questionlist']
+            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
         })
-        console.log("quizlist", quizAll);
+        console.log("quizlist--", quizAll);
+
+        // const test = await sequelize.query(`
+        // select * 
+        // from quiz_app.quiz
+        // `)
+
+        // console.log('tes', test);
 
         res.json({
-            message: quizAll
+            data: quizAll
+            // data: test[0]
         })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
+
+exports.create_quiz = async (req, res, next) => {
+    console.log("quiz_create", req.body);
+    // console.log("two", req.user);
+    // console.log("three", req.user.id);
+
+    // const user_id = req.user.id
+
+    try {
+        const { quiz_name, total_question, questionlist, time, marks, rank } = req.body;
+
+        const newQuiz = await sequelizeQuiz.create({
+            quiz_name,
+            total_question,
+            questionlist,
+            time,
+            marks,
+            rank
+        })
+        // console.log(newQuiz)
+        // console.log("newQuizID", newQuiz.id)
+
+        // const orderItem = await sequelizeUserOrderMapping.create({
+        //     user_id,
+        //     order_id: newQuiz.id
+        // })
+
+        res.json({
+            data: "New Quiz created successfully",
+            newQuiz
+        })
+
+        if (!newQuiz) {
+            const error = new Error('Order not created!');
+            error.status = 500;
+            throw error;
+        }
     }
     catch (err) {
         console.log(err)

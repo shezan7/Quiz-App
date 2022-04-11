@@ -2,20 +2,28 @@ const { DataTypes } = require('sequelize')
 
 const sequelize = require('../config/db');
 
-const { JSON } = DataTypes
+const { INTEGER, STRING, JSON } = DataTypes
 
 const quiz = sequelize.define('quiz', {
+    quiz_name: {
+        type: STRING
+    },
+    total_question: {
+        type: INTEGER
+    },
     questionlist: {
         type: JSON,
         allowNull: false
     },
-    // options: {
-    //     type: STRING
-    // },
-    // answer: {
-    //     type: STRING,
-    //     allowNull: false
-    // }
+    time: {
+        type: INTEGER
+    },
+    marks: {
+        type: INTEGER
+    },
+    rank: {
+        type: STRING
+    }
 }, {
     schema: "quiz_app",
     timestamps: true,

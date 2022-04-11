@@ -23,7 +23,7 @@ router.get("/quiz/viewQuizList", checkUser(), QuizController.quiz_get_all);
 
 router.get("/users/view-quizlist", QuizController.view_quizlist);
 
-
+router.post("/users/create-quiz", QuizController.create_quiz);
 
 
 module.exports = router;
