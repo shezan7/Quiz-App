@@ -1,7 +1,7 @@
 const db = require('../config/db')
 const { QueryTypes } = require('sequelize')
 
-const sequelizeOrder = require('../sequelize-models/Quiz')
+const sequelizeQuiz = require('../sequelize-models/Quiz')
 const sequelizeUserOrderMapping = require('../sequelize-models/UserQuizMapping')
 
 exports.quiz_get_all = async (req, res, next) => {
@@ -195,3 +195,22 @@ exports.quiz_create = async (req, res, next) => {
     }
 
 };
+
+exports.view_quizlist = async (req, res, next) => {
+    try {
+        const quizAll = await sequelizeQuiz.findAll({
+            attributes: ['id', 'questionlist']
+        })
+        console.log("quizlist", quizAll);
+
+        res.json({
+            message: quizAll
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}

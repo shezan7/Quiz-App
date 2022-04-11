@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-console.log(process.env.Database);
+// console.log(process.env.Database);
 
 const sequelize = new Sequelize(process.env.Database, process.env.User, process.env.Password, {
   dialect: process.env.Db_dialect,

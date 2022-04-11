@@ -21,6 +21,8 @@ router.get("/quiz/viewQuizDetails", checkUser(), QuizController.quiz_get_all);
 
 router.get("/quiz/viewQuizList", checkUser(), QuizController.quiz_get_all);
 
+router.get("/users/view-quizlist", QuizController.view_quizlist);
+
 
 
 
