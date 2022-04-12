@@ -7,7 +7,7 @@ const QuizController = require('../controllers/quiz');
 const { checkUser } = require("../middleware/roleValid")
 
 
-// router.use(checkAuth);
+router.use(checkAuth);
 
 router.get("/", checkUser(9), QuizController.quiz_get_all);
 
@@ -21,9 +21,9 @@ router.get("/quiz/viewQuizDetails", checkUser(), QuizController.quiz_get_all);
 
 router.get("/quiz/viewQuizList", checkUser(), QuizController.quiz_get_all);
 
-router.get("/users/view-quizlist", QuizController.view_quizlist);
+router.get("/users/view-quizlist", checkUser(4), QuizController.view_quizlist);
 
-router.post("/users/create-quiz", QuizController.create_quiz);
+router.post("/users/create-quiz", checkUser(5), QuizController.create_quiz);
 
 
 module.exports = router;

@@ -256,7 +256,7 @@ exports.create_quiz = async (req, res, next) => {
         })
 
         if (!newQuiz) {
-            const error = new Error('Order not created!');
+            const error = new Error('Quiz not created!');
             error.status = 500;
             throw error;
         }
