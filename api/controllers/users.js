@@ -205,10 +205,30 @@ exports.users_login = async (req, res, next) => {
         if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve"))) {
             const validPassword = await bcrypt.compare(password, user[0].password)
 
+            const role = await db.query(
+                `SELECT 
+                    u.*,
+                    (SELECT 
+                        urm.role_id 
+                    FROM 
+                        quiz_app.user_role_mapping urm, 
+                        quiz_app.role r 
+                    WHERE 
+                        u.id = urm.user_id  
+                        AND urm.role_id = r.id)
+                FROM 
+                    quiz_app.users u
+                WHERE 
+                    u.email= '${email}';`
+                , {
+                    type: QueryTypes.SELECT
+                })
+
             if (validPassword) {
                 const jwtToken = jwt.sign({
                     id: user[0].id,
-                    access: user[0].accesslist
+                    access: user[0].accesslist,
+                    role: role[0].role_id
                 }, process.env.JWT_KEY,
                     {
                         expiresIn: "8h"
@@ -218,7 +238,7 @@ exports.users_login = async (req, res, next) => {
                     data: "User login successfull",
                     token: jwtToken,
                     userId: user[0].id,
-                    role_id: user[0].role
+                    roleId: role[0].role_id
                 })
                 console.log(user[0].id)
             }
@@ -228,6 +248,7 @@ exports.users_login = async (req, res, next) => {
                 });
             }
             console.log("check-access", user[0].accesslist)
+            console.log("check-role", role[0].role_id)
         }
         else {
             return res.status(405).send({
