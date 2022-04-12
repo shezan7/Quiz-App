@@ -10,7 +10,7 @@ const urm = require('../sequelize-models/UserRoleMapping')
 
 exports.users_signup = async (req, res, next) => {
     console.log("users_register", req.body);
-    const { email, password } = req.body;
+    const { email, password, role_id } = req.body;
     const salt = await bcrypt.genSalt(10);
     hashPassword = await bcrypt.hash(password, salt);
     try {
@@ -24,7 +24,7 @@ exports.users_signup = async (req, res, next) => {
                 console.log("user's status", newUser.status)
                 const setUserRole = await urm.create({
                     user_id: newUser.id,
-                    role_id: 2
+                    role_id: role_id
                 })
             } catch (error) {
                 console.log(err)
@@ -217,7 +217,8 @@ exports.users_login = async (req, res, next) => {
                 res.status(200).json({
                     data: "User login successfull",
                     token: jwtToken,
-                    userId: user[0].id
+                    userId: user[0].id,
+                    role_id: user[0].role
                 })
                 console.log(user[0].id)
             }
