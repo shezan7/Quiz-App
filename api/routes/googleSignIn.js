@@ -12,7 +12,12 @@ router.get('/good', (req, res) => res.send('Welcome Page'))
 
 
 
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/google',
+    () => {
+        console.log("hitted");
+        passport.authenticate('google', { scope: ['profile', 'email'] });
+    });
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
     function (req, res) {
