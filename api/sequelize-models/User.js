@@ -14,6 +14,10 @@ const user = sequelize.define('user', {
         type: STRING,
         allowNull: true
     },
+    name: {
+        type: STRING,
+        allowNull: false
+    },
     google_id: {
         type: STRING,
         allowNull: true
