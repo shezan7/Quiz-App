@@ -2,8 +2,9 @@ const db = require('../config/db')
 const { QueryTypes } = require('sequelize')
 
 const sequelizeQuiz = require('../sequelize-models/Quiz')
-const sequelizeUserOrderMapping = require('../sequelize-models/UserQuizMapping');
+const sequelizeUserQuizMapping = require('../sequelize-models/UserQuizMapping');
 const sequelize = require('../config/db');
+
 
 exports.quiz_get_all = async (req, res, next) => {
     console.log("orders_get", req.body);
@@ -198,24 +199,75 @@ exports.quiz_create = async (req, res, next) => {
 };
 
 exports.view_quizlist = async (req, res, next) => {
+    // try {
+    //     const quizAll = await sequelizeQuiz.findAll({
+    //         attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
+    //     })
+    //     console.log("quizlist", quizAll);
+
+    //     // const test = await sequelize.query(`
+    //     // select * 
+    //     // from quiz_app.quiz
+    //     // `)
+
+    //     // console.log('tes', test);
+
+    //     res.json({
+    //         data: quizAll
+    //         // data: test[0]
+    //     })
+    // }
+
+
+
+
+    console.log("one", req.user.id);
+
+    const userQuizlist = [];
+    const findUserId = await sequelizeUserQuizMapping.findAll({
+        where: {
+            user_id: req.user.id,
+        },
+        attributes: ["quiz_id"]
+    })
+    findUserId.map((val) => {
+        userQuizlist.push(val.quiz_id)
+    })
+    console.log("list", userQuizlist);
+
     try {
-        const quizAll = await sequelizeQuiz.findAll({
-            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
-        })
-        console.log("quizlist--", quizAll);
+        if (userQuizlist === undefined || userQuizlist.length === 0) {
+            console.log("two")
+            return res.status(404).send({ message: "Quiz is not found!!!" });
 
-        // const test = await sequelize.query(`
-        // select * 
-        // from quiz_app.quiz
-        // `)
+        } else {
+            const quiz = await db.query(
+                `SELECT
+                    q.id,
+                    q.quiz_name,
+                    q.total_question,
+                    q.marks,
+                    q.time,
+                    q.questionlist
+                FROM
+                    quiz_app.users u,
+                    quiz_app.quiz q,
+                    quiz_app.user_quiz_mapping uqm
+                WHERE
+                    u.id = uqm.user_id
+                    AND q.id = uqm.quiz_id
+                    AND u.id = ${req.user.id};`
+                , {
+                    type: QueryTypes.SELECT
+                })
 
-        // console.log('tes', test);
+            res.json({
+                message: "Find successfully", quiz
+            })
+        }
 
-        res.json({
-            data: quizAll
-            // data: test[0]
-        })
     }
+
     catch (err) {
         console.log(err)
         res.status(500).json({
