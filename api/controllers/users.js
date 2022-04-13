@@ -178,6 +178,12 @@ exports.users_login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
+    if (email === undefined || password === undefined) {
+        return res.status(500).send({
+            message: "Something went wrong!"
+        });
+    }
+
     try {
         const user = await db.query(
             `SELECT 
@@ -198,11 +204,19 @@ exports.users_login = async (req, res, next) => {
                 type: QueryTypes.SELECT
             })
 
-        console.log(user[0].status)
+        // console.log(user[0].status)
 
-        if (!user[0]) {
-            return res.status(404).send({ message: "User Not found!!!" });
-        }
+        // if (!user[0]) {
+        //     return res.status(404).send({ message: "User Not found!!!" });
+        // }
+        // const emailExists = (await sequelizeUser.findOne()).where('email', email);
+        // if (!emailExists) {
+        //     return res.status(505).send({
+        //         message: "User Not found!"
+        //     });
+        // }
+
+
         if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve"))) {
             const validPassword = await bcrypt.compare(password, user[0].password)
 
@@ -245,7 +259,7 @@ exports.users_login = async (req, res, next) => {
             }
             else {
                 return res.status(401).send({
-                    message: "Invalid Password!"
+                    message: "User Not found!"
                 });
             }
             console.log("check-access", user[0].accesslist)
