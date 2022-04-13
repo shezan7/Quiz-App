@@ -198,28 +198,37 @@ exports.quiz_create = async (req, res, next) => {
 
 };
 
+exports.view_AllQuizlist = async (req, res, next) => {
+    try {
+        console.log("All Quizlist", req.body);
+        const quizAll = await sequelizeQuiz.findAll({
+            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
+        })
+        console.log("quizlist", quizAll);
+
+        // const test = await sequelize.query(`
+        // select * 
+        // from quiz_app.quiz
+        // `)
+
+        // console.log('tes', test);
+
+        res.json({
+            data: quizAll
+            // data: test[0]
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+
+}
+
+
 exports.view_quizlist = async (req, res, next) => {
-    // try {
-    //     const quizAll = await sequelizeQuiz.findAll({
-    //         attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
-    //     })
-    //     console.log("quizlist", quizAll);
-
-    //     // const test = await sequelize.query(`
-    //     // select * 
-    //     // from quiz_app.quiz
-    //     // `)
-
-    //     // console.log('tes', test);
-
-    //     res.json({
-    //         data: quizAll
-    //         // data: test[0]
-    //     })
-    // }
-
-
-
 
     console.log("one", req.user.id);
 
