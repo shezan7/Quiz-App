@@ -11,9 +11,9 @@ router.post("/users/signup", UsersController.users_signup);
 
 router.get("/users/pending-users", checkAuth, checkUser(1), UsersController.users_get_pending);
 
-router.patch("/users/approve/:id", checkAuth, checkUser(2), UsersController.users_update_approve);
+router.get("/users/approve/:id", checkAuth, checkUser(2), UsersController.users_update_approve);
 
-router.patch("/users/reject/:id", checkAuth, checkUser(3), UsersController.users_update_reject);
+router.get("/users/reject/:id", checkAuth, checkUser(3), UsersController.users_update_reject);
 
 router.get("/users/approved-users", checkAuth, checkUser(1), UsersController.users_get_approve);
 

@@ -11,6 +11,11 @@ const urm = require('../sequelize-models/UserRoleMapping')
 exports.users_signup = async (req, res, next) => {
     console.log("users_register", req.body);
     const { email, password, name, role_id } = req.body;
+    if (email === undefined || password === undefined || name === undefined || role_id === undefined) {
+        return res.status(500).send({
+            message: "Something went wrong!"
+        });
+    }
     const salt = await bcrypt.genSalt(10);
     hashPassword = await bcrypt.hash(password, salt);
     try {
