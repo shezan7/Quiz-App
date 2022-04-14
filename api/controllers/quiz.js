@@ -202,7 +202,7 @@ exports.view_AllQuizlist = async (req, res, next) => {
     try {
         console.log("All Quizlist", req.body);
         const quizAll = await sequelizeQuiz.findAll({
-            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'rank', 'questionlist']
+            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'questionlist']
         })
         console.log("quizlist", quizAll);
 
@@ -300,8 +300,7 @@ exports.create_quiz = async (req, res, next) => {
             total_question,
             questionlist,
             time,
-            marks,
-            rank
+            marks
         })
         // console.log(newQuiz)
         // console.log("newQuizID", newQuiz.id)

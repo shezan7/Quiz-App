@@ -20,9 +20,6 @@ const quiz = sequelize.define('quiz', {
     },
     marks: {
         type: INTEGER
-    },
-    rank: {
-        type: STRING
     }
 }, {
     schema: "quiz_app",
