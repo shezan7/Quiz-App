@@ -419,21 +419,22 @@ exports.view_quizDetails = async (req, res, next) => {
 }
 
 exports.create_quizDetails = async (req, res, next) => {
-    console.log("quiz_create", req.body);
+    console.log("quiz_create_details", req.body);
     // console.log("two", req.user);
     // console.log("three", req.user.id);
 
     // const user_id = req.user.id
 
     try {
-        const { quiz_name, total_question, questionlist, time, marks, rank } = req.body;
+        const { quiz_name, total_question, time, marks, question, rank } = req.body;
 
-        const newQuiz = await sequelizeQuiz.create({
+        const newQuizDetails = await sequelizeExamHistory.create({
             quiz_name,
             total_question,
-            questionlist,
             time,
-            marks
+            marks,
+            question,
+            rank
         })
         // console.log(newQuiz)
         // console.log("newQuizID", newQuiz.id)
@@ -444,12 +445,12 @@ exports.create_quizDetails = async (req, res, next) => {
         // })
 
         res.json({
-            data: "New Quiz created successfully",
-            newQuiz
+            data: "New Quiz_Details created successfully",
+            newQuizDetails
         })
 
-        if (!newQuiz) {
-            const error = new Error('Quiz not created!');
+        if (!newQuizDetails) {
+            const error = new Error('Quiz_Details is not created!');
             error.status = 500;
             throw error;
         }
