@@ -222,27 +222,30 @@ exports.users_login = async (req, res, next) => {
         // }
 
 
-        if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve"))) {
-            const validPassword = await bcrypt.compare(password, user[0].password)
-
-            const role = await db.query(
-                `SELECT 
-                    u.*,
-                    (SELECT 
-                        urm.role_id 
-                    FROM 
-                        quiz_app.user_role_mapping urm, 
-                        quiz_app.role r 
-                    WHERE 
-                        u.id = urm.user_id  
-                        AND urm.role_id = r.id)
+        const role = await db.query(
+            `SELECT 
+                u.*,
+                (SELECT 
+                    urm.role_id 
                 FROM 
-                    quiz_app.users u
+                    quiz_app.user_role_mapping urm, 
+                    quiz_app.role r 
                 WHERE 
-                    u.email= '${email}';`
-                , {
-                    type: QueryTypes.SELECT
-                })
+                    u.id = urm.user_id  
+                    AND urm.role_id = r.id)
+            FROM 
+                quiz_app.users u
+            WHERE 
+                u.email= '${email}';`
+            , {
+                type: QueryTypes.SELECT
+            })
+
+
+
+        if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve") || (role[0].role_id === 3))) {
+            
+            const validPassword = await bcrypt.compare(password, user[0].password)
 
             if (validPassword) {
                 const jwtToken = jwt.sign({
