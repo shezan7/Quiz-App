@@ -30,11 +30,11 @@ router.post("/users/create-quiz", checkUser(6), QuizController.create_quiz);
 
 
 
-router.get("/users/view-allQuiz-details", QuizController.view_AllQuizDetails);
+router.get("/users/view-allQuiz-details", checkUser(15), QuizController.view_AllQuizDetails);
 
-router.get("/users/view-quiz-details", QuizController.view_quizDetails);
+router.get("/users/view-quiz-details", checkUser(7), QuizController.view_quizDetails);
 
-router.post("/users/create-quiz-details", QuizController.create_quizDetails);
+router.post("/users/create-quiz-details", checkUser(16), QuizController.create_quizDetails);
 
 
 
