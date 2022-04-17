@@ -11,6 +11,7 @@ const cors = require('cors')
 
 const userRoutes = require('./api/routes/users')
 const quizRoutes = require('./api/routes/quiz')
+const examHistoryRoutes = require('./api/routes/examHistory')
 const googleAuthRoutes = require('./api/routes/googleSignIn')
 
 app.use(express.json())
@@ -18,6 +19,7 @@ app.use(cors())
 
 app.use(userRoutes)
 app.use(quizRoutes)
+app.use(examHistoryRoutes)
 app.use(googleAuthRoutes)
 
 app.get("/", (req, res) => {

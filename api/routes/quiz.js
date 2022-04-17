@@ -21,22 +21,11 @@ router.get("/quiz/viewQuizDetails", checkUser(), QuizController.quiz_get_all);
 
 router.get("/quiz/viewQuizList", checkUser(), QuizController.quiz_get_all);
 
-router.get("/users/view-allQuizlist", checkUser(5), QuizController.view_AllQuizlist);
+router.get("/quiz/view-allQuizlist", checkUser(5), QuizController.view_AllQuizlist);
 
-router.get("/users/view-quizlist", checkUser(4), QuizController.view_quizlist);
+router.get("/quiz/view-quizlist", checkUser(4), QuizController.view_quizlist);
 
-router.post("/users/create-quiz", checkUser(6), QuizController.create_quiz);
-
-
-
-
-router.get("/users/view-allQuiz-details", checkUser(15), QuizController.view_AllQuizDetails);
-
-router.get("/users/view-quiz-details", checkUser(7), QuizController.view_quizDetails);
-
-router.post("/users/create-quiz-details", checkUser(16), QuizController.create_quizDetails);
-
-
+router.post("/quiz/create-quiz", checkUser(6), QuizController.create_quiz);
 
 
 
