@@ -294,7 +294,7 @@ exports.create_quiz = async (req, res, next) => {
     // const user_id = req.user.id
 
     try {
-        const { quiz_name, total_question, questionlist, time, marks, rank } = req.body;
+        const { quiz_name, total_question, questionlist, time, marks } = req.body;
 
         const newQuiz = await sequelizeQuiz.create({
             quiz_name,
@@ -306,10 +306,10 @@ exports.create_quiz = async (req, res, next) => {
         // console.log(newQuiz)
         // console.log("newQuizID", newQuiz.id)
 
-        // const orderItem = await sequelizeUserOrderMapping.create({
-        //     user_id,
-        //     order_id: newQuiz.id
-        // })
+        const userQuiz = await sequelizeUserQuizMapping.create({
+            user_id: req.user.id,
+            quiz_id: newQuiz.id
+        })
 
         res.json({
             data: "New Quiz created successfully",
@@ -442,10 +442,10 @@ exports.create_quizDetails = async (req, res, next) => {
         // console.log(newQuiz)
         // console.log("newQuizID", newQuiz.id)
 
-        // const orderItem = await sequelizeUserOrderMapping.create({
-        //     user_id,
-        //     order_id: newQuiz.id
-        // })
+        const userExamHistory = await sequelizeUserExamHistoryMapping.create({
+            user_id: req.user.id,
+            exam_history_id: newQuizDetails.id
+        })
 
         res.json({
             data: "New Quiz_Details created successfully",
