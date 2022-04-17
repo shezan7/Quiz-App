@@ -244,7 +244,7 @@ exports.users_login = async (req, res, next) => {
 
 
         if ((user[0]) && ((user[0].status === "admin") || (user[0].status === "approve") || (role[0].role_id === 3))) {
-            
+
             const validPassword = await bcrypt.compare(password, user[0].password)
 
             if (validPassword) {
@@ -281,46 +281,6 @@ exports.users_login = async (req, res, next) => {
 
     }
     catch (err) {
-        console.log(err)
-        res.status(500).json({
-            error: err
-        })
-    }
-}
-
-exports.make_tutor = async (req, res, next) => {
-    console.log("users_info", req.body);
-
-    const { user_id } = req.body
-    try {
-
-        const user = await urm.findOne({
-            where: {
-                user_id
-            }
-        })
-        //console.log("first", user.role_id)
-        if (!user) {
-            return res.status(404).send({ message: "No user found for making tutor" });
-        }
-        else if (user.role_id === 2) {
-            return res.status(404).send({ message: "Already tutor" });
-        }
-        else {
-            const editorRole = await urm.update({
-                role_id: 2
-            }, {
-                where: {
-                    user_id
-                }
-            })
-
-            res.status(200).json({
-                message: "Make admin successfull"
-            })
-        }
-
-    } catch (err) {
         console.log(err)
         res.status(500).json({
             error: err

@@ -21,7 +21,6 @@ router.get("/users/rejected-users", checkAuth, checkUser(1), UsersController.use
 
 router.post("/users/login", UsersController.users_login);
 
-// router.patch("/users/make-tutor", checkAuth, checkUser(13), UsersController.make_tutor);
 
 
 module.exports = router;
