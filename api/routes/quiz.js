@@ -14,6 +14,8 @@ router.get("/quiz/view-quizlist", checkUser(4), QuizController.view_quizlist);
 
 router.post("/quiz/create-quiz", checkUser(6), QuizController.create_quiz);
 
+router.get("/quiz/view-single-quiz/:id", checkUser(5), QuizController.view_single_quiz);
+
 
 
 module.exports = router;

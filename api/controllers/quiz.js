@@ -136,3 +136,26 @@ exports.create_quiz = async (req, res, next) => {
     }
 }
 
+exports.view_single_quiz = async (req, res, next) => {
+    console.log("quiz_id", req.params);
+
+    try {
+        const { id } = req.params;
+        const quizId = await sequelizeQuiz.findOne({
+            attributes: ['id', 'quiz_name', 'total_question', 'time', 'marks', 'questionlist'],
+            where: {
+                id
+            }
+        })
+
+        res.json({
+            message: "QuizId find successfully", quizId
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    }
+}
